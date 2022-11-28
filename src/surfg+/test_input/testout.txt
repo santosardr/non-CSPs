@@ -1,0 +1,24 @@
+SurfG+ results :
+Id : LBA0077
+Description: transposase
+Length : 568
+HMM : 
+LPxTG = N, Score = 0.0, E-value = -1.0
+CW_bind_1 = Y CW_bind_1, Score = 10.8, E-value = 1.2E-4
+CW_bind_2 = N, Score = 0.0, E-value = -1.0
+GW1 = N, Score = 0.0, E-value = -1.0
+GW2 = N, Score = 0.0, E-value = -1.0
+GW3 = N, Score = 0.0, E-value = -1.0
+PG_bind_1 = N, Score = 0.0, E-value = -1.0
+PG_bind_2 = N, Score = 0.0, E-value = -1.0
+PG_bind_3 = N, Score = 0.0, E-value = -1.0
+SLH = N, Score = 0.0, E-value = -1.0
+LysM = N, Score = 0.0, E-value = -1.0
+LipoP : N, 0/0, end = 0
+SignalP : N/N, clivage position = 0
+TMMOD :  Number of TMH helix= 0, Number of loop = 0
+C_out length = 0, C_out_start = 0, C_out_end = 0
+N_out length = 0,  N_out_start = 0, N_out_end = 0
+Prediction : PSE
+PSE category : R
+

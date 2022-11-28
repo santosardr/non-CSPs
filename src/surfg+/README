@@ -1,0 +1,25 @@
+Hi everyone. 
+This site is an alternative to obtaining the SurfG+ software. Unfortunately, the original site (http://genome.jouy.inra.fr/surfgplus/)) is no longer available.
+SurfG+ is a pipeline running several other software, most non-open source. To run SurfG+, you must download and install by yourself the following software: 
+
+//SignalP:
+SurfG.signalpshort.exec = third-party-software/signalp-3.0/signalp
+//HMMER
+SurfG.hmm.exec = third-party-software/hmmer-2.3.2/src/hmmsearch
+//LipoP
+SurfG.lipop.exec = third-party-software/LipoP/LipoP
+//TMMOD binary and installation directory
+SurfG.tmmod.exec = third-party-software/tmmod/tmmod
+SurfG.directorytmmod = third-party-software/tmmod/
+//TMHMM (Optional, only if Surfg+ is launched with -TMHMM parameter)
+SurfG.tmhmm.exec = third-party-software/TMHMM2.0c/bin/tmhmm
+
+I extracted this software list from the files named SurfG.props.*. I edited these files to incorporate a path called "third-party-software ." So, it would be best if you defined a directory to install the above list of software and reference it by this path name. In Linux machines, you do not need to alter the files but create a symbolic link like this:
+ln -fs /home/anderson/repos/medpipe third-party-software
+
+Also, if you want to run predictions for gram-negative bacteria, you should change the symbolic link 
+ln -fs SurfG.props.gramn SurfG.props
+
+Please ensure each of the above software runs alone and smoothly before trying to run the SurfG+.
+
+That's all, folks.

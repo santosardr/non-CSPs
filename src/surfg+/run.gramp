@@ -1,0 +1,1 @@
+java -Xmx1024m -jar Surfg.jar -i $1 -o $1.out.txt $1.csv.txt $1.result.txt -TMHMM -loop 100 -end 50

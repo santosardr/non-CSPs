@@ -1,0 +1,91 @@
+//SurfG properties
+//Please modify the file according to your local configuration.
+//Do not modify the variable names.
+
+////////1 INSTALLATION PATHS
+//Modify path for tools used by Surfg+
+//Enter full path to binaries.
+
+//SignalP:
+SurfG.signalpshort.exec = third-party-software/signalp-3.0/signalp
+
+//HMMER
+SurfG.hmm.exec = third-party-software/hmmer-2.3.2/src/hmmsearch
+
+//LipoP
+SurfG.lipop.exec = third-party-software/LipoP/LipoP
+
+
+//TMMOD binary and installation directory
+SurfG.tmmod.exec = third-party-software/tmmod/tmmod
+SurfG.directorytmmod = third-party-software/tmmod/
+
+//TMHMM (Optionnal, only if Surfg+ is launched with -TMHMM parameter)
+SurfG.tmhmm.exec = third-party-software/TMHMM2.0c/bin/tmhmm
+
+//Full path of HMMProfils directory
+SurfG.profiles = ./HmmProfils/
+
+//Directory for temporary files
+// (Intermediate results ...)
+// Please check that this directory 
+//exists and is writable.
+SurfG.tempfile = tmp\/
+
+
+////////2 DEFAULT PARAMETERS
+
+//Loop and End size 
+//the Default size of loop is 100
+SurfG.size_loop=100
+//the Default size of end is 50
+//Cp = [21.15 pixels * (200 nm / 150 pixels)] / 0.365 nm/aa = 73 aa
+surfG.size_end=50
+
+
+////////3 RISKY PARAMETERS
+
+//
+// After this point, it's likely you won't 
+// have to modify parameters unless you really 
+// know what you are doing.
+
+//the Default size of fasta package 
+SurfG.package=2000
+
+//Hmm profiles file names 
+SurfG.profile1 = LPxTG.hmm
+SurfG.profile2 = CW_bind_1_ls.hmm
+SurfG.profile3 = CW_bind_2_ls.hmm
+SurfG.profile4 = GW1.hmm
+SurfG.profile5 = GW2.hmm
+SurfG.profile6 = GW3.hmm
+SurfG.profile7 = PG_bind_1_ls.hmm
+SurfG.profile8 = PG_bind_2_ls.hmm
+SurfG.profile9 = PG_bind_3_ls.hmm
+SurfG.profile10 = SLH_ls.hmm
+SurfG.profile11 = LysM_ls.hmm
+
+//Organism type (signalp)
+SurfG.gram = gram+
+
+SurfG.test = test_input/testrapide.faa
+
+//SGBD Url, Username and password
+SurfG.dburl=jdbc:postgresql://bddev/prot_db_amal
+SurfG.username=agmial
+SurfG.password=XXX
+
+//Do not modify !
+SurfG.driver=org.postgresql.Driver
+SurfG.signalpshort.class = biotools.calc.SignalPCalcShort
+SurfG.signalpshort.env =
+SurfG.tmhmm.class =  biotools.calc.TMHMMCalc
+SurfG.tmhmm.env = 
+SurfG.tmmod.class =  biotools.calc.TMMODCalc
+SurfG.tmmod.env =
+SurfG.hmm.class = biotools.calc.HMMCalc
+SurfG.hmm.env =
+SurfG.lipop.class =  biotools.calc.LipoPCalc
+SurfG.lipop.env = 
+

@@ -1,0 +1,10 @@
+java -Xmx1024m -jar Surfg.jar -i pan/Cp1002_AA.fasta -o pan/Cp1002_out.txt pan/Cp1002_csv.txt pan/Cp1002_result.txt -TMHMM -loop 100 -end 67
+
+java -Xmx1024m -jar Surfg.jar -i pan/CpC231_AA.fasta -o pan/CpC231_out.txt pan/CpC231_csv.txt pan/CpC231_result.txt -TMHMM -loop 100 -end 69
+
+java -Xmx1024m -jar Surfg.jar -i pan/CpFRC41_AA.fasta -o pan/CpFRC41_out.txt pan/CpFRC41_csv.txt pan/CpFRC41_result.txt -TMHMM -loop 100 -end 63
+
+java -Xmx1024m -jar Surfg.jar -i pan/CpI19_AA.fasta -o pan/CpI19_out.txt pan/CpI19_csv.txt pan/CpI19_result.txt -TMHMM -loop 100 -end 93
+
+java -Xmx1024m -jar Surfg.jar -i pan/CpPAT10_AA.fasta -o pan/CpPAT10_out.txt pan/CpPAT10_csv.txt pan/CpPAT10_result.txt -TMHMM -loop 100 -end 67
+
