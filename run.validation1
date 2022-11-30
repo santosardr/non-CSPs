@@ -11,6 +11,6 @@ then
 	fi
 else
 	echo "Please, send me one of the training models from the current folder:"
-	echo "./run.validation1 model-nonclassicsec-71-95.bin"
-	echo "./run.validation1 model-nonclassicsec-76-98.bin"
+	echo "./run.validation1 bin/model-nonclassicsec-71-95.bin"
+	echo "./run.validation1 bin/model-nonclassicsec-76-98.bin"
 fi
