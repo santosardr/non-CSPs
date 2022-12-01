@@ -5,7 +5,7 @@ then
 	then
 		java -cp /usr/local/weka/weka.jar weka.classifiers.trees.RandomForest -l $1 -p 0 -T validation1.arff > validation1.result
 		sed -i '1,5d; s/[ ]\+/ /g; s/^[ ]//g; s/[ ]$//g; s/[ ]/\t/g;${/^$/d;}' validation1.result
-		awk ' BEGIN{fp=0;fn=0}{ if($3~ /NON-SECRETED/) {if($1>92)fn++;} else if($3~ /SECRETED/){if($1<=92)fp++;}}END{ printf "\tFalse Positives=%d\tSpecificity=%.2f\tFalse Negatives=%d\tSensitivity=%.2f\tACC=%.2f", fp, (92-fp)/(92), fn, (43-fn)/(43), (92-fp+43-fn)/(135);}' validation1.result;echo
+		awk ' BEGIN{fp=0;fn=0}{ if($3~ /NON-SECRETED/) {if($1>92)fn++;} else if($3~ /SECRETED/){if($1<=92)fp++;}}END{ printf "\tFalse Positives=%d\tSpecificity=%.2f\tFalse Negatives=%d\tSensitivity=%.2f\tACC=%.2f", fp, (92-fp)/(92), fn, (14-fn)/(14), (92-fp+14-fn)/(106);}' validation1.result;echo
 	else
 		echo "Could not find /usr/local/weka/weka.jar"	
 	fi
