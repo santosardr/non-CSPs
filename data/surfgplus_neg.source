@@ -1,0 +1,71 @@
+  Clostridioides_difficile	reference	GCA_000009205.2_ASM920v2	GCA_000009205.2_ASM920v2_protein.faa
+  Escherichia_coli_IAI39	GCA_000026345.1_ASM2634v1	GCA_000026345.1_ASM2634v1_protein.faa
+  Klebsiella_pneumoniae	reference	GCA_000240185.2_ASM24018v2	GCA_000240185.2_ASM24018v2_protein.faa
+  Enterobacteriaceae_bacterium_strain_FGI_57	latest_assembly_versions	GCA_000330845.1_ASM33084v1	GCA_000330845.1_ASM33084v1_protein.faa
+  Escherichia_coli_UMN026	GCA_000026325.2_ASM2632v2	GCA_000026325.2_ASM2632v2_protein.faa
+  Clostridium_tetani	representative	GCA_000007625.1_ASM762v1	GCA_000007625.1_ASM762v1_protein.faa
+  Corynebacterium_striatum	GCA_002804085.1_ASM280408v1	GCA_002804085.1_ASM280408v1_protein.faa
+  Escherichia_coli_str_K-12	GCA_000005845.2_ASM584v2	GCA_000005845.2_ASM584v2_protein.faa
+  Acinetobacter_calcoaceticus	GCA_900093475.1_36734_D01_2	GCA_900093475.1_36734_D01_2_protein.faa
+  Bacteroides_fragilis	reference	GCA_000009925.1_ASM992v1	GCA_000009925.1_ASM992v1_protein.faa
+  Acinetobacter_lwoffii	GCA_002119785.1_ASM211978v1	GCA_002119785.1_ASM211978v1_protein.faa
+  Staphylococcus_aureus	reference	GCA_000013425.1_ASM1342v1	GCA_000013425.1_ASM1342v1_protein.faa
+  Neisseria_gonorrhoeae	reference	GCA_000006845.1_ASM684v1	GCA_000006845.1_ASM684v1_protein.faa
+  Enterococcus_avium	GCA_002891055.1_ASM289105v1	GCA_002891055.1_ASM289105v1_protein.faa
+  Escherichia_coli_O104_H4	GCA_000299455.1_ASM29945v1	GCA_000299455.1_ASM29945v1_protein.faa
+  Enterococcus_faecalis	reference	GCA_000007785.1_ASM778v1	GCA_000007785.1_ASM778v1_protein.faa
+  Shigella_dysenteriae	reference	GCA_000012005.1_ASM1200v1	GCA_000012005.1_ASM1200v1_protein.faa
+  Escherichia_coli_O83_H1	GCA_000183345.1_ASM18334v1	GCA_000183345.1_ASM18334v1_protein.faa
+  Enterobacteriaceae_bacterium_9_2_54FAA	latest_assembly_versions	GCA_000185685.2_Ente_bact_9_2_54FAA_V2	GCA_000185685.2_Ente_bact_9_2_54FAA_V2_protein.faa
+  Clostridium_perfringens	representative	GCA_000013285.1_ASM1328v1	GCA_000013285.1_ASM1328v1_protein.faa
+  Acinetobacter_baumannii	representative	GCA_000746645.1_ASM74664v1	GCA_000746645.1_ASM74664v1_protein.faa
+  Salmonella_enterica_Typhimurium_LT2	GCA_000006945.2_ASM694v2	GCA_000006945.2_ASM694v2_protein.faa
+  Mycobacterium_tuberculosis	reference	GCA_000195955.2_ASM19595v2	GCA_000195955.2_ASM19595v2_protein.faa
+  Streptococcus_pneumoniae	reference	GCA_000007045.1_ASM704v1	GCA_000007045.1_ASM704v1_protein.faa
+  Escherichia_coli_O157_H7	GCA_000008865.1_ASM886v1	GCA_000008865.1_ASM886v1_protein.faa
+  Vibrio_cholerae	reference	GCA_000006745.1_ASM674v1	GCA_000006745.1_ASM674v1_protein.faa
+  Enterobacteriaceae_bacterium_ATCC_29904	latest_assembly_versions	GCA_000755535.1_ASM75553v1	GCA_000755535.1_ASM75553v1_protein.faa
+  Campylobacter_coli	GCA_002843985.1_ASM284398v1	GCA_002843985.1_ASM284398v1_protein.faa
+  Campylobacter_jejuni	reference	GCA_000009085.1_ASM908v1	GCA_000009085.1_ASM908v1_protein.faa
+  Shigella_flexneri	reference	GCA_000006925.2_ASM692v2	GCA_000006925.2_ASM692v2_protein.faa
+  Streptococcus_pyogenes	reference	GCA_000006785.2_ASM678v2	GCA_000006785.2_ASM678v2_protein.faa
+  Streptococcus_agalactiae	reference	GCA_000007265.1_ASM726v1	GCA_000007265.1_ASM726v1_protein.faa
+  Salmonella_enterica_Typhi_CT18	GCA_000195995.1_ASM19599v1	GCA_000195995.1_ASM19599v1_protein.faa
+  Pseudomonas_aeruginosa	reference	GCA_000006765.1_ASM676v1	GCA_000006765.1_ASM676v1_protein.faa
+  Stenotrophomonas_maltophilia	representative	GCA_000072485.1_ASM7248v1	GCA_000072485.1_ASM7248v1_protein.faa
+  Clostridioides_difficile	reference	GCA_000009205.2_ASM920v2	GCA_000009205.2_ASM920v2_protein.faa.csv.txt
+  Escherichia_coli_IAI39	GCA_000026345.1_ASM2634v1	GCA_000026345.1_ASM2634v1_protein.faa.csv.txt
+  Klebsiella_pneumoniae	reference	GCA_000240185.2_ASM24018v2	GCA_000240185.2_ASM24018v2_protein.faa.csv.txt
+  Enterobacteriaceae_bacterium_strain_FGI_57	latest_assembly_versions	GCA_000330845.1_ASM33084v1	GCA_000330845.1_ASM33084v1_protein.faa.csv.txt
+  Escherichia_coli_UMN026	GCA_000026325.2_ASM2632v2	GCA_000026325.2_ASM2632v2_protein.faa.csv.txt
+  Clostridium_tetani	representative	GCA_000007625.1_ASM762v1	GCA_000007625.1_ASM762v1_protein.faa.csv.txt
+  Corynebacterium_striatum	GCA_002804085.1_ASM280408v1	GCA_002804085.1_ASM280408v1_protein.faa.csv.txt
+  Escherichia_coli_str_K-12	GCA_000005845.2_ASM584v2	GCA_000005845.2_ASM584v2_protein.faa.csv.txt
+  Acinetobacter_calcoaceticus	GCA_900093475.1_36734_D01_2	GCA_900093475.1_36734_D01_2_protein.faa.csv.txt
+  Bacteroides_fragilis	reference	GCA_000009925.1_ASM992v1	GCA_000009925.1_ASM992v1_protein.faa.csv.txt
+  Acinetobacter_lwoffii	GCA_002119785.1_ASM211978v1	GCA_002119785.1_ASM211978v1_protein.faa.csv.txt
+  Staphylococcus_aureus	reference	GCA_000013425.1_ASM1342v1	GCA_000013425.1_ASM1342v1_protein.faa.csv.txt
+  Neisseria_gonorrhoeae	reference	GCA_000006845.1_ASM684v1	GCA_000006845.1_ASM684v1_protein.faa.csv.txt
+  Enterococcus_avium	GCA_002891055.1_ASM289105v1	GCA_002891055.1_ASM289105v1_protein.faa.csv.txt
+  Escherichia_coli_O104_H4	GCA_000299455.1_ASM29945v1	GCA_000299455.1_ASM29945v1_protein.faa.csv.txt
+  Enterococcus_faecalis	reference	GCA_000007785.1_ASM778v1	GCA_000007785.1_ASM778v1_protein.faa.csv.txt
+  Shigella_dysenteriae	reference	GCA_000012005.1_ASM1200v1	GCA_000012005.1_ASM1200v1_protein.faa.csv.txt
+  Escherichia_coli_O83_H1	GCA_000183345.1_ASM18334v1	GCA_000183345.1_ASM18334v1_protein.faa.csv.txt
+  Enterobacteriaceae_bacterium_9_2_54FAA	latest_assembly_versions	GCA_000185685.2_Ente_bact_9_2_54FAA_V2	GCA_000185685.2_Ente_bact_9_2_54FAA_V2_protein.faa.csv.txt
+  Clostridium_perfringens	representative	GCA_000013285.1_ASM1328v1	GCA_000013285.1_ASM1328v1_protein.faa.csv.txt
+  Acinetobacter_baumannii	representative	GCA_000746645.1_ASM74664v1	GCA_000746645.1_ASM74664v1_protein.faa.csv.txt
+  Salmonella_enterica_Typhimurium_LT2	GCA_000006945.2_ASM694v2	GCA_000006945.2_ASM694v2_protein.faa.csv.txt
+  Mycobacterium_tuberculosis	reference	GCA_000195955.2_ASM19595v2	GCA_000195955.2_ASM19595v2_protein.faa.csv.txt
+  Streptococcus_pneumoniae	reference	GCA_000007045.1_ASM704v1	GCA_000007045.1_ASM704v1_protein.faa.csv.txt
+  Escherichia_coli_O157_H7	GCA_000008865.1_ASM886v1	GCA_000008865.1_ASM886v1_protein.faa.csv.txt
+  Vibrio_cholerae	reference	GCA_000006745.1_ASM674v1	GCA_000006745.1_ASM674v1_protein.faa.csv.txt
+  Enterobacteriaceae_bacterium_ATCC_29904	latest_assembly_versions	GCA_000755535.1_ASM75553v1	GCA_000755535.1_ASM75553v1_protein.faa.csv.txt
+  Campylobacter_coli	GCA_002843985.1_ASM284398v1	GCA_002843985.1_ASM284398v1_protein.faa.csv.txt
+  Campylobacter_jejuni	reference	GCA_000009085.1_ASM908v1	GCA_000009085.1_ASM908v1_protein.faa.csv.txt
+  Shigella_flexneri	reference	GCA_000006925.2_ASM692v2	GCA_000006925.2_ASM692v2_protein.faa.csv.txt
+  Streptococcus_pyogenes	reference	GCA_000006785.2_ASM678v2	GCA_000006785.2_ASM678v2_protein.faa.csv.txt
+  Streptococcus_agalactiae	reference	GCA_000007265.1_ASM726v1	GCA_000007265.1_ASM726v1_protein.faa.csv.txt
+  Salmonella_enterica_Typhi_CT18	GCA_000195995.1_ASM19599v1	GCA_000195995.1_ASM19599v1_protein.faa.csv.txt
+  Pseudomonas_aeruginosa	reference	GCA_000006765.1_ASM676v1	GCA_000006765.1_ASM676v1_protein.faa.csv.txt
+  Stenotrophomonas_maltophilia	representative	GCA_000072485.1_ASM7248v1	GCA_000072485.1_ASM7248v1_protein.faa.csv.txt
+
