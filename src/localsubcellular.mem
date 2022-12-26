@@ -6,3 +6,5 @@ filter1:
 
 filter2:
 for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.997) {cat(sprintf("%dd;", i+144))} };
+
+for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.75) {cat(sprintf("%dd;", i+144))} };
