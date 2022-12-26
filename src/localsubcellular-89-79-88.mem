@@ -1,8 +1,0 @@
-filter1:
-
-8400 proteins coming from the four loci were filtered using create.sed according to bin/PeNGaRoo_dataset.bin results applied over the respective arff.
-/home/anderson/repos/subcellular/data/protein@end-cyt.faa  /home/anderson/repos/subcellular/data/protein@end-pse.faa
-/home/anderson/repos/subcellular/data/protein@end-mem.faa  /home/anderson/repos/subcellular/data/protein@end-sec.faa
-
-filter2:
-for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.997) {cat(sprintf("%dd;", i+144))} };
