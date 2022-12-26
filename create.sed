@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ -r localsubcellular-filtered.arff -a -r $1 ]; then
+if [[ -r localsubcellular-filtered.arff && -r $1 ]]
+then
 	awk 'BEGIN{todel=""; cmd=0; count=1;passo=1000} {
 		if ($3 ~/1:SECRETED/ ) {
 			if(todel==""){
