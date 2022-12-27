@@ -1,1 +1,1 @@
-../semiag/semiag4.bash
+semiag/semiag4.bash
