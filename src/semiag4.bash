@@ -1,0 +1,1 @@
+../semiag/semiag4.bash
