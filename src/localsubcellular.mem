@@ -13,4 +13,4 @@ filter3:
 DBScan with parameter 1.1 kept the maximum ACC. Removing a list of 173 negatives classified as NAs did the trick of increasing sensitivity with minimal loss to specificity.
 
 filter4:
-Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with three proteins. The cluster with three proteins kept sensitivity at 86, and the set with one protein increased specificity to 90. 
+Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with four proteins. After removal, the cluster with four proteins kept sensitivity at 86, and the set with one protein increased specificity to 90.
