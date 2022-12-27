@@ -14,3 +14,6 @@ DBScan with parameter 1.1 kept the maximum ACC. Removing a list of 173 negatives
 
 filter4:
 Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with four proteins. After removal, the cluster with four proteins kept sensitivity at 86, and the set with one protein increased specificity to 90.
+
+filter5:
+A random procedure to exclude four proteins at once, retraining, and validating allowed me to accomplish 92 and 86% of specificity and sensitivity, respectively. I am running this algorithm recursively, like a genetic algorithm, over the resulting data.
