@@ -1,7 +1,4 @@
 library(RWeka)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
 
 aminoacid<-read.arff("training.arff")
 mat <- data.matrix(aminoacid[,1:140]);
