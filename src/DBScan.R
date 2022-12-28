@@ -16,10 +16,10 @@ length(as.numeric(labels(neg[which(is.na(neg))])));
 length(as.numeric(labels(pos[which(is.na(pos))])))
 
 printf <- function(...) cat(sprintf(...))
-lista=as.numeric(labels(neg[which(is.na(neg))]))+141
+lista=as.numeric(labels(neg[which(is.na(neg))]))+144
 for(item in lista){ printf("%dd;",  item) }
 
-lista=as.numeric(labels(neg[which(neg==1)]))+141;for(item in lista){ printf("%d ",  item) }
+lista=as.numeric(labels(neg[which(neg==1)]))+144;for(item in lista){ printf("%d ",  item) }
 i=0; preditos=(  ); for indice in ${preditos[@]}; do indice=$[$indice+$i]; sed -i "$[indice]d" filtered.arff; i=$[$i-1];done
 
 
