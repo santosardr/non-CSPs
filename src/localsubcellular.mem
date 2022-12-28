@@ -1,13 +1,47 @@
 filter1:
 
-8400 proteins coming from the four loci were filtered using create.sed according to bin/PeNGaRoo_dataset.bin results applied over the respective arff.
-/home/anderson/repos/subcellular/data/protein@end-cyt.faa  /home/anderson/repos/subcellular/data/protein@end-pse.faa
-/home/anderson/repos/subcellular/data/protein@end-mem.faa  /home/anderson/repos/subcellular/data/protein@end-sec.faa
+99977 proteins coming from the four loci of 28 complete genomes were filtered using create.sed according to bin/PeNGaRoo_dataset.bin results applied over the respective arff. The remaining 90514 proteins passed to next phase. Similar proteins to the validation set ones were excluded from the candidata training proteins:
+28 Genomes:
+./Clostridioides_difficile/reference/GCA_000009205.2_ASM920v2/GCA_000009205.2_ASM920v2_protein.faa
+./Klebsiella_pneumoniae/reference/GCA_000240185.2_ASM24018v2/GCA_000240185.2_ASM24018v2_protein.faa
+./Clostridium_tetani/representative/GCA_000007625.1_ASM762v1/GCA_000007625.1_ASM762v1_protein.faa
+./Corynebacterium_striatum/GCA_002804085.1_ASM280408v1/GCA_002804085.1_ASM280408v1_protein.faa
+./Escherichia_coli_str_K-12/GCA_000005845.2_ASM584v2/GCA_000005845.2_ASM584v2_protein.faa
+./Acinetobacter_calcoaceticus/GCA_900093475.1_36734_D01_2/GCA_900093475.1_36734_D01_2_protein.faa
+./Bacteroides_fragilis/reference/GCA_000009925.1_ASM992v1/GCA_000009925.1_ASM992v1_protein.faa
+./Acinetobacter_lwoffii/GCA_002119785.1_ASM211978v1/GCA_002119785.1_ASM211978v1_protein.faa
+./Staphylococcus_aureus/reference/GCA_000013425.1_ASM1342v1/GCA_000013425.1_ASM1342v1_protein.faa
+./Neisseria_gonorrhoeae/reference/GCA_000006845.1_ASM684v1/GCA_000006845.1_ASM684v1_protein.faa
+./Enterococcus_avium/GCA_002891055.1_ASM289105v1/GCA_002891055.1_ASM289105v1_protein.faa
+./Enterococcus_faecalis/reference/GCA_000007785.1_ASM778v1/GCA_000007785.1_ASM778v1_protein.faa
+./Shigella_dysenteriae/reference/GCA_000012005.1_ASM1200v1/GCA_000012005.1_ASM1200v1_protein.faa
+./Enterobacteriaceae_bacterium_9_2_54FAA/latest_assembly_versions/GCA_000185685.2_Ente_bact_9_2_54FAA_V2/GCA_000185685.2_Ente_bact_9_2_54FAA_V2_protein.faa
+./Clostridium_perfringens/representative/GCA_000013285.1_ASM1328v1/GCA_000013285.1_ASM1328v1_protein.faa
+./Acinetobacter_baumannii/representative/GCA_000746645.1_ASM74664v1/GCA_000746645.1_ASM74664v1_protein.faa
+./Mycobacterium_tuberculosis/reference/GCA_000195955.2_ASM19595v2/GCA_000195955.2_ASM19595v2_protein.faa
+./Streptococcus_pneumoniae/reference/GCA_000007045.1_ASM704v1/GCA_000007045.1_ASM704v1_protein.faa
+./Escherichia_coli_O157_H7/GCA_000008865.1_ASM886v1/GCA_000008865.1_ASM886v1_protein.faa
+./Vibrio_cholerae/reference/GCA_000006745.1_ASM674v1/GCA_000006745.1_ASM674v1_protein.faa
+./Campylobacter_coli/GCA_002843985.1_ASM284398v1/GCA_002843985.1_ASM284398v1_protein.faa
+./Campylobacter_jejuni/reference/GCA_000009085.1_ASM908v1/GCA_000009085.1_ASM908v1_protein.faa
+./Shigella_flexneri/reference/GCA_000006925.2_ASM692v2/GCA_000006925.2_ASM692v2_protein.faa
+./Streptococcus_pyogenes/reference/GCA_000006785.2_ASM678v2/GCA_000006785.2_ASM678v2_protein.faa
+./Streptococcus_agalactiae/reference/GCA_000007265.1_ASM726v1/GCA_000007265.1_ASM726v1_protein.faa
+./Salmonella_enterica_Typhi_CT18/GCA_000195995.1_ASM19599v1/GCA_000195995.1_ASM19599v1_protein.faa
+./Pseudomonas_aeruginosa/reference/GCA_000006765.1_ASM676v1/GCA_000006765.1_ASM676v1_protein.faa
+./Stenotrophomonas_maltophilia/representative/GCA_000072485.1_ASM7248v1/GCA_000072485.1_ASM7248v1_protein.faa
+
 
 filter2:
-for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.997) {cat(sprintf("%dd;", i+144))} };
+The outliers.R script eliminated the majority of the data. After two rounds, the negative data set was reduced to 5391 proteins. The second round was decided by tri-and-error using values coming from a correlation boxplot to negative and positive profiles of the 140 features. 
 
-for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.75) {cat(sprintf("%dd;", i+144))} };
+round1 (initial mean profiles):
+for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.95) {cat(sprintf("%dd;", i+144))} };
+#Resemblance to positive mean
+for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.999) {cat(sprintf("%dd;", i+144))} };
+
+round2 (new mean profiles):
+for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.9943) {cat(sprintf("%d\t1:?\t1:SECRETED\t1.0\n", i))} };
 
 filter3:
 DBScan with parameter 1.1 kept the maximum ACC. Removing a list of 173 negatives classified as NAs did the trick of increasing sensitivity with minimal loss to specificity.
