@@ -1,12 +1,12 @@
 #!/bin/bash
 if [[ -r localsubcellular-filtered.arff && -r $1 ]]
 then
-	awk 'BEGIN{todel=""; cmd=0; count=1;passo=1000} {
+	awk 'BEGIN{todel=""; cmd=0; count=1;passo=10000} {
 		if ($3 ~/1:SECRETED/ ) {
 			if(todel==""){
-				todel=sprintf("%dd", $1-cmd);
+				todel=sprintf("%dd", $1+144-cmd);
 			}else{
-				todel=sprintf("%s;%dd", todel, $1-cmd);
+				todel=sprintf("%s;%dd", todel, $1+144-cmd);
 			}
 			if(count%passo==0){
 				cmd=cmd+passo;
