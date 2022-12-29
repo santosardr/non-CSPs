@@ -1,6 +1,6 @@
 filter1:
 
-99977 proteins coming from the four loci of 28 complete genomes were filtered using create.sed according to bin/PeNGaRoo_dataset.bin results applied over the respective arff. The remaining 90514 proteins passed to next phase. Similar proteins to the validation set ones were excluded from the candidata training proteins:
+99977 proteins from the four loci of 28 complete genomes were filtered using create.sed according to bin/PeNGaRoo_dataset.bin results applied over the respective arff. The remaining 90514 proteins passed to the next phase. Similar proteins to the validation set were excluded from the candidate training proteins:
 28 Genomes:
 ./Clostridioides_difficile/reference/GCA_000009205.2_ASM920v2/GCA_000009205.2_ASM920v2_protein.faa
 ./Klebsiella_pneumoniae/reference/GCA_000240185.2_ASM24018v2/GCA_000240185.2_ASM24018v2_protein.faa
@@ -33,7 +33,7 @@ filter1:
 
 
 filter2:
-The outliers.R script eliminated the majority of the data. After two rounds, the negative data set was reduced to 5391 proteins. The second round was decided by tri-and-error using values coming from a correlation boxplot to negative and positive profiles of the 140 features. 
+The outliers.R script eliminated the majority of the data. After two rounds, the negative data set was reduced to 5391 proteins. The second round was decided by tri-and-error using values from a correlation boxplot to negative and positive profiles of the 140 features. 
 
 round1 (initial mean profiles):
 for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.95) {cat(sprintf("%dd;", i+144))} };
@@ -44,7 +44,8 @@ round2 (new mean profiles):
 for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.9943) {cat(sprintf("%d\t1:?\t1:SECRETED\t1.0\n", i))} };
 
 filter3:
-DBScan with parameter 1.1 kept the maximum ACC. Removing a list of 173 negatives classified as NAs did the trick of increasing sensitivity with minimal loss to specificity.
+
+DBScan with parameters 0.1 and 6 fragmented the negative data set to the extreme: 6103 proteins were classified as NAs. Only three sets (14,21 and 14 proteins) remained. After I removed these 49 proteins the sensitivity was increased from 79 to 86%, followed by a small decrease in sensitivity from 88 to 86%, ACC 86%.
 
 filter4:
 Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with four proteins. After removal, the cluster with four proteins kept sensitivity at 86, and the set with one protein increased specificity to 90.
