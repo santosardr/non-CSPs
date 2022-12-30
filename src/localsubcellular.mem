@@ -46,6 +46,7 @@ for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pear
 filter3:
 
 DBScan with parameters 0.1 and 6 fragmented the negative data set to the extreme: 6103 proteins were classified as NAs. Only three sets (14,21 and 14 proteins) remained. After I removed these 49 proteins the sensitivity was increased from 79 to 86%, followed by a small decrease in sensitivity from 88 to 86%, ACC 86%.
+I applied the second round of this filter using the parameters 0.025 and 3. Now, twenty proteins were separated into six sets. Removing each batch of proteins from the remaining 6054 negative candidates increased the sensitivity at the cost of slightly decreasing specificity. However, my first try at combining two of these six clusters for removing produced an actual increase in specificity without diminishing sensitivity. These moves created the filter3-89-86-89.arff.
 
 filter4:
 Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with four proteins. After removal, the cluster with four proteins kept sensitivity at 86, and the set with one protein increased specificity to 90.
