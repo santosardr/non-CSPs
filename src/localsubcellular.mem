@@ -49,7 +49,7 @@ DBScan with parameters 0.1 and 6 fragmented the negative data set to the extreme
 I applied the second round of this filter using the parameters 0.025 and 3. Now, twenty proteins were separated into six sets. Removing each batch of proteins from the remaining 6054 negative candidates increased the sensitivity at the cost of slightly decreasing specificity. However, my first try at combining two of these six clusters for removing produced an actual increase in specificity without diminishing sensitivity. These moves created the filter3-89-86-89.arff.
 
 filter4:
-Kmeans configured to 80 clusters showed me two groups: one with just one protein and the other with four proteins. After removal, the cluster with four proteins kept sensitivity at 86, and the set with one protein increased specificity to 90.
+A filter similar to the previous one, using Kmeans, can also pinpoint possible elements to be removed from the training set. Working on other data sets, I had the chance to upgrade my results using Kmeans. However, I could not upgrade the results even after splitting the data into 80 clusters for this particular data.
 
 filter5:
-A random procedure to exclude four proteins at once, retraining, and validating allowed me to accomplish 92 and 86% of specificity and sensitivity, respectively. I am running this algorithm recursively, like a genetic algorithm (semiag), over the resulting data.
+A random procedure to exclude five proteins at once, retraining, and validating allowed me to accomplish 91 and 86% specificity and sensitivity, respectively, and an accuracy of 91%. I run this algorithm recursively, like a genetic algorithm (a semi-algorithm genetic), over the resulting data.
