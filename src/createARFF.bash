@@ -28,7 +28,7 @@ then
     cat weka.attributes  >> localsubcellular.arff
     echo '@attribute class {SECRETED,NON-SECRETED}' >> localsubcellular.arff
     echo '@data' >> localsubcellular.arff
-    cat wekapos.arff2 wekaneg.arff2  >> localsubcellular.arff 
+    cat wekaneg.arff2 wekapos.arff2  >> localsubcellular.arff 
     rm weka*.attributes2 weka*.attributes weka*.arff2 weka*.arff neg.faa pos.faa 
     echo "File localsubcellular.arff for training is ready!"
     echo "For testing, exchange the labels by the punctuation signal used for questions (?)"

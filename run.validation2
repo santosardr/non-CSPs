@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ -r $1 ]
+then
+	if [ -r /usr/local/weka/weka.jar ]
+	then
+		java -cp /usr/local/weka/weka.jar $2 -l $1 -p 0 -T validation2.arff > validation2.result
+		sed -i '1,5d; s/[ ]\+/ /g; s/^[ ]//g; s/[ ]$//g; s/[ ]/\t/g;${/^$/d;}' validation2.result
+		awk ' BEGIN{fp=0;fn=0}{ if($3~ /NON-SECRETED/) {if($1>34)fn++;} else if($3~ /SECRETED/){if($1<=34)fp++;}}END{ printf "\tFalse Positives=%d\tSpecificity=%.2f\tFalse Negatives=%d\tSensitivity=%.2f\tACC=%.2f", fp, (34-fp)/(34), fn, (34-fn)/(34), (34-fp+34-fn)/(68);}' validation2.result;echo
+	else
+		echo "Could not find /usr/local/weka/weka.jar"	
+	fi
+else
+	echo "Please, send me one of the training models from the current folder:"
+	echo "./run.validation2 bin/model-nonclassicsec-71-95.bin"
+	echo "./run.validation2 bin/model-nonclassicsec-76-98.bin"
+fi
