@@ -19,10 +19,10 @@ negatives=aminoacidframe[[3]]
 output <-c();
 
 #Difference from negative mean
-for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.999) {output<-append(output,i)}};
+for (i in (limP+1 ):limN ) {  correlation=cor(negatives, mat[i,], method = 'pearson'); if (correlation < 0.995) {output<-append(output,i)}};
 
 #Resemblance to positive mean
-for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.998) {output<-append(output,i)}};
+for (i in (limP+1 ):limN ) {  correlation=cor(positives, mat[i,], method = 'pearson'); if (correlation > 0.9940) {output<-append(output,i)}};
 
 outputsort <-sort(output[!duplicated(output)]);
 sink("localsubcellular.result");
