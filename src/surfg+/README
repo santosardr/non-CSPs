@@ -15,7 +15,12 @@ SurfG.directorytmmod = third-party-software/tmmod/
 SurfG.tmhmm.exec = third-party-software/TMHMM2.0c/bin/tmhmm
 
 I extracted this software list from the files named SurfG.props.*. I edited these files to incorporate a path called "third-party-software ." So, it would be best if you defined a directory to install the above list of software and reference it by this path name. In Linux machines, you do not need to alter the files but create a symbolic link like this:
+
 ln -fs /home/anderson/repos/medpipe third-party-software
+
+Also we need a environment variable called MEDPIPE set with the path pointed by third-party-software. For instance:
+
+export MEDPIPE=/home/anderson/repos/medpipe/; java -Xmx1024m -jar Surfg.jar -i /home/anderson/repos/non-CSPs/data/pengaroo_training_neg.faa -o /home/anderson/repos/non-CSPs/data/pengaroo_training_neg.out /home/anderson/repos/non-CSPs/data/pengaroo_training_neg.csv /home/anderson/repos/non-CSPs/data/pengaroo_training_neg.result -TMHMM -loop 100 -end 50
 
 Also, if you want to run predictions for gram-negative bacteria, you should change the symbolic link 
 ln -fs SurfG.props.gramn SurfG.props
