@@ -2,7 +2,7 @@
 
 function randomgenerator()
 {
-    local rand=$(LC_ALL=C tr -dc '[:digit:]' < /dev/urandom|head -c8);
+    local rand=$(LC_ALL=C tr -dc '[:digit:]' < /dev/urandom 2>/dev/null |head -c8);
     local size=$(grep -c NON-SECRETED$ training.arff | cut -f 2 -d':');
     local real=$(echo "scale=8;$size*($rand/100000000)"|bc -l);
     local integer=$(echo "scale=0;$real/1.0"|bc -l);
