@@ -3,15 +3,15 @@
 function randomgenerator()
 {
     local rand=$(LC_ALL=C tr -dc '[:digit:]' < /dev/urandom|head -c8);
-    local real=$(echo "scale=8;6095*($rand/100000000)"|bc -l);
+    local size=6092;
+    local real=$(echo "scale=8;$size*($rand/100000000)"|bc -l);
     local integer=$(echo "scale=0;$real/1.0"|bc -l);
     if [ $integer -eq 0 ];
     then
-	integer=1
+        integer=1
     fi
     echo "$integer"
     }
-
 if [ $1 -gt 0 -a $2 -gt 0 ];
 then
     for run in $(seq 1 $2);
