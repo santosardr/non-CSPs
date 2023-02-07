@@ -1,0 +1,144 @@
+# Pre-requisites: java8, Weka, RWeka and optics_dbScan weka packages
+# I unzipped the weka.jar in the path /usr/local/weka
+sudo apt install -y openjdk-8-jdk openjdk-8-jre
+sudo mkdir /usr/lib/jvm/default-java/bin/ -p
+cd /usr/lib/jvm/default-java/bin/
+sudo ln -fs /usr/bin/java
+sudo ln -fs /usr/bin/javac
+sudo ln -fs /usr/bin/jar
+sudo R CMD javareconf JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+
+# Installing RWeka
+sudo R
+> install.packages("RWeka", dependencies=true);
+> quit()
+
+# Installing optics_dbScan
+java  -cp /usr/local/weka/weka.jar weka.core.WekaPackageManager -list-packages installed
+java  -cp /usr/local/weka/weka.jar weka.core.WekaPackageManager -install-package optics_dbScan
+
+
+
+# Normalizing fasta files with our in-house software valifasta
+local=`pwd`; for ref in `cat lista`; do  path="${ref%/*}"; file="${ref##*/}"; echo $path '-->' $file; cd $path; valifasta -i $file -o $file; cd $local; done
+
+# Converting fasta files to a set of 140 numerical descriptors per protein with our in-house software valisfasta
+find . -name *.faa -type f -ls -exec features {} >> all.features \;
+
+# I asked to list the working file with the 'ls' command. Every new file will be preceded by a list of their properties, including the owner. In my case, the owner is 'anderson.' I used my name as a flag to delete header lines from the mapping's descriptors file.
+sed -i '/anderson/{N;d;}' all.features
+
+# Gathering all protein sequences in a single file for alignments
+find . -name *.faa -type f -exec cat {} >> all \;
+grep -c '>' all
+
+## Filter 0 - STEP I
+
+# Alignments of the negative candidate proteins against the validation datasets.
+ggsearch36 /home/anderson/repos/non-CSPs/data/pengaroo_independent_test_neg.faa all -m 8 -E 0.000001 | sort -k 3 -n -r > blastp-validation-training-neg
+
+# Tagging to remove those with more than 90% of size and sequence similarity
+awk '{ if ($3>=90 && ( ($8-$7) >= (0.9*($10-$9)) ) ) { printf("%s ", $2) } }' blastp-validation-training-neg > 2remove
+
+# Alignments of the negative candidate proteins against the validation datasets.
+ggsearch36 /home/anderson/repos/non-CSPs/data/pengaroo_independent_test_pos.faa all -m 8 -E 0.000001 | sort -k 3 -n -r > blastp-validation-training-pos
+
+# Tagging to remove those with more than 90% of size and sequence similarity
+awk '{ if ($3>=90 && ( ($8-$7) >= (0.9*($10-$9)) ) ) { printf("%s ", $2) } }' blastp-validation-training-pos >> 2remove
+
+# Alignments of the negative candidate proteins against the validation datasets.
+ggsearch36 /home/anderson/repos/non-CSPs/data/pengaroo_training_pos.faa all -m 8 -E 0.000001 | sort -k 3 -n -r > blastp-validation-training-pos
+
+# Tagging to remove those with more than 90% of size and sequence similarity
+awk '{ if ($3>=90 && ( ($8-$7) >= (0.9*($10-$9)) ) ) { printf("%s ", $2) } }' blastp-validation-training-pos >> 2remove
+
+# Checking for duplicated proteins. The next commands do not account for duplicity. Please, remove duplicity manually.
+for prot in `cat 2remove`;do echo $prot; done | wc -l 
+for prot in `cat 2remove`;do echo $prot; done | sort -u | wc -l 
+
+# Removing tagged proteins from the giant multifasta file
+for prot in `cat 2remove`;do echo $prot; sed -i "/$prot/{N;d;}" all;  done 
+grep -c '>' all
+
+# Removing tagged proteins from the giant file of all proteins mapped by descriptors
+wc -l all.features 
+for prot in `cat 2remove`;do echo $prot; sed -i "/$prot/d" all.features;  done
+wc -l all.features 
+
+## Filter 1 - STEP II
+
+# Converting the proteins mapped by descriptors to an ARFF file, according to WEKA needs.
+cp all.features wekaneg.arff 
+cut -f 2- wekaneg.arff > wekaneg.arff2
+sed -i "s/\t/,/g" weka*.arff2
+sed -i "s/$/?/g" wekaneg.arff2
+mv wekaneg.arff2 wekaneg.arff
+
+# Using the header from another file to create our giant ARFF file.
+head -n 144 /home/anderson/repos/non-CSPs/src/myids-filter5-91-86-91-a.arff > head
+
+# First candidate negative training dataset 
+cat head wekaneg.arff > candidate-negative-training-dataset.arff 
+
+# Classifying potential non-CSPs using our adapted PeNGaRoo model. Pay attention to the file's pathways customized for my needs
+time java -cp /usr/local/weka/weka.jar weka.classifiers.trees.RandomForest -l /home/anderson/repos/non-CSPs/bin/PeNGaRoo_dataset.bin -p 0 -T candidate-negative-training-dataset.arff > candidate-negative-training-dataset.result 
+
+real    0m9,407s
+user    0m11,766s
+sys     0m1,263s
+
+# Checking the result
+grep -c '1:SECRETED' candidate-negative-training-dataset.result 
+
+# Formatting the classification result for further processing
+sed -i '1,5d; s/[ ]\+/ /g; s/^[ ]//g; s/[ ]$//g; s/[ ]/\t/g;${/^$/d;}' candidate-negative-training-dataset.result
+
+# The script 'create.sed' expects a file named 'localsubcellular-filtered.arff'. 
+# Creating a link to the candidate negative training dataset.
+ln -fs candidate-negative-training-dataset.arff localsubcellular-filtered.arff
+
+# The 'create.sed' script will create a sed command for each set of ten thousand proteins
+/home/anderson/repos/non-CSPs/src/create.sed candidate-negative-training-dataset.result
+
+# Removing proteins
+bash candidate-negative-training-dataset.result.sed
+
+grep -c '?' *.arff
+candidate-negative-training-dataset.arff:133004
+localsubcellular-filtered.arff:120851
+
+# In the next filter (3), the script 'filter2-outliers.R' will format the output like 'candidate-negative-training-dataset.result'.
+# By doing so, we can use the 'create.sed' script again to remove more proteins from the 'candidate-negative-training-dataset.arff'
+
+# Preparing a training file for the next step. Using the headers and positive proteins of existing files.
+head -n 285  /home/anderson/repos/non-CSPs/src/myids-filter5-91-86-91-b.arff > head 
+tail -n +145 localsubcellular-filtered.arff | sed "s/,?$/,NON-SECRETED/g" > tail
+cat head tail > training.arff
+
+# Checking the dataset size per class
+grep -c "NON-SECRETED$" training.arff 
+grep -c ",SECRETED$" training.arff 
+
+## Filter 2 - STEP III
+
+# Applying the third filter. Please, tweak the cut-off values at the end of the file 'filter2-outliers.R' to obtain other results
+Rscript /home/anderson/repos/non-CSPs/src/filter2-outliers.R
+cp training.arff localsubcellular-filtered.arff
+# The 'create.sed' script will create a sed command for each set of ten thousand proteins
+/home/anderson/repos/non-CSPs/src/create.sed localsubcellular.result
+Removing proteins
+bash localsubcellular.result.sed
+# Checking the negative dataset size 
+grep -c NON-SECRETED$ *.arff
+
+# First validation against an independent dataset. Considering the cursor is located in the non-CPS root directory.
+# Pay attention to the file's pathways customized for my needs
+/usr/local/jdk/bin/java  -cp /usr/local/weka/weka.jar weka.classifiers.trees.RandomForest -t try2/localsubcellular-filtered.arff -d try2/try2.bin | tail -n 15; ./run.validation1 try2/try2.bin; ./run.validation2 try2/try2.bin
+
+## Filter 3 - STEP IV
+
+If you got here successfully you do not need tutorials for further filters. Besides, if the results are not very encouraging till now is time to change some data or parameters in the previous filters starting over again.
+
+Cheers,
+Anderson Santos
+
