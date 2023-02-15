@@ -1,4 +1,7 @@
 #!/bin/bash
+if [ $# -gt 0 ]
+then
+
 if [ -r $1 ]
 then
 	if [ -r /usr/local/weka/weka.jar ]
@@ -11,6 +14,9 @@ then
 	fi
 else
 	echo "Please, send me one of the training models from the current folder:"
-	echo "./run.validation2 bin/model-nonclassicsec-71-95.bin"
-	echo "./run.validation2 bin/model-nonclassicsec-76-98.bin"
+	echo "./run.validation1 bin/model-nonclassicsec-71-95.bin"
+	echo "./run.validation1 bin/model-nonclassicsec-76-98.bin"
+fi
+else
+    echo "Please, pass the model file name as a parameter"
 fi
