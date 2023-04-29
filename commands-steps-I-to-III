@@ -6,12 +6,10 @@ cd /usr/lib/jvm/default-java/bin/
 sudo ln -fs /usr/bin/java
 sudo ln -fs /usr/bin/javac
 sudo ln -fs /usr/bin/jar
-sudo R CMD javareconf JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-# Installing RWeka
-sudo R
-> install.packages("RWeka", dependencies=true);
-> quit()
+sudo R -e "install.packages('rJava', repos='https://rforge.net')"
+sudo R CMD javareconf JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
+sudo R -e "install.packages('RWeka', type = 'source')"
 
 # Installing optics_dbScan
 java  -cp /usr/local/weka/weka.jar weka.core.WekaPackageManager -list-packages installed
