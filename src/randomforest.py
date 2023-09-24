@@ -64,20 +64,21 @@ specificity = tn / (tn + fp)
 accuracy = (tp + tn) / (tp + tn + fp + fn)
 
 # Print the confusion matrix
-print(f"Confusion Matrix:")
-print(f"{confusion[0][0]} {confusion[0][1]}")
-print(f"{confusion[1][0]} {confusion[1][1]}")
+print(f"\n\tConfusion Matrix:")
+print(f"\ta\tb\t<-- classified as")
+print(f"\t{confusion[0][0]}\t{confusion[0][1]}\ta = NON-SECRETED")
+print(f"\t{confusion[1][0]}\t{confusion[1][1]}\tb = SECRETED\n")
 
 # Print the variables involved for debugging
-print(f"True Positives: {tp}")
-print(f"False Negatives: {fn}")
-print(f"True Negatives: {tn}")
-print(f"False Positives: {fp}")
+print(f"True Positives:\t{tp}")
+print(f"False Negatives:\t{fn}")
+print(f"True Negatives:\t{tn}")
+print(f"False Positives:\t{fp}\n")
 
 # Print the sensitivity, specificity, and accuracy
 print(f"Sensitivity: {sensitivity}")
 print(f"Specificity: {specificity}")
-print(f"Accuracy: {accuracy}")
+print(f"Accuracy: {accuracy}\n")
 
 # Rest of the code...
 
