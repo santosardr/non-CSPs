@@ -23,14 +23,15 @@
 			(relation (cadr (split-sequence #\Space relation_csv)))
 			(attributes_csv (subseq lines 1 data-start-index))
 			
-			(classes (reduce #'append  (mapcar (lambda (attribute)
+			(classes_str (reduce #'append  (mapcar (lambda (attribute)
 								(let* ((start-index (position #\{ attribute))
 									(end-index (position #\} attribute :from-end t))
 									(values (subseq attribute (1+ start-index) end-index)))
 								(split-sequence #\, values)))
 								(last attributes_csv))))
+			(classes (mapcar (lambda (class) (read-from-string class)) classes_str))
 			
-                        (attributes (remove-if #'null (mapcar (lambda (att)
+			(attributes (remove-if #'null (mapcar (lambda (att)
 								(multiple-value-bind (text success)
 										     (ignore-errors (read-from-string 
 												     (cadr (split-sequence #\Space att))
@@ -53,21 +54,32 @@
 				data_csv)
 			)
 			
-			(states (reduce #'append  (mapcar (lambda (oneline)
+			(datafloat (mapcar (lambda (oneline)
+								(mapcar (lambda (number) (float number))  
+										oneline
+									)
+								)
+								data
+						)
+			)
+
+			(states_nom (reduce #'append  (mapcar (lambda (oneline)
 							(last (mapcar (lambda (text) 
-									(multiple-value-bind (number success) 
+									(multiple-value-bind (class success) 
 												(ignore-errors (read-from-string text)) 
-												(if success number 0)))
+												(if success class 0)))
 									(split-sequence #\, oneline)))) 
 							data_csv)
 					)
 				)
+			(states_num (mapcar (lambda (class) (1+ (position class classes)) ) states_nom))
 			);let*
 
 			(list :relation relation
 			:attributes attributes
-			:data data
-			:states states
+			:data datafloat
+			:states_nom states_nom
+			:states_num states_num
 			:classes classes))))
 
 (defvar file-path "data/src/myids-filter5-89-93-90-a.arff")
@@ -77,5 +89,5 @@
 (format t "Relation: ~a~%" (getf arff-data :relation))
 (format t "Attributes: ~a~%" (getf arff-data :attributes))
 ;(format t "Data: ~a~%" (getf arff-data :data))
-(format t "States: ~a~%" (getf arff-data :states))
+(format t "States: ~a~%" (getf arff-data :states_num))
 (format t "Classes: ~a~%" (getf arff-data :classes))
