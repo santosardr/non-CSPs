@@ -72,7 +72,7 @@
 							data_csv)
 					)
 				)
-			(states_num (mapcar (lambda (class) (1+ (position class classes)) ) states_nom))
+			(states_num (mapcar (lambda (class)  (position class classes) ) states_nom))
 			);let*
 
 			(list :relation relation
