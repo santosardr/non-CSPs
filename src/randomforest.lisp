@@ -186,24 +186,6 @@
   :element-type '(unsigned-byte 8))
   (cl-store:restore stream)))	
 
-(defun main1()
-  (let ((args *posix-argv*))
-    (if (< (length args) 4)
-        (progn
-          (format t "Error: Insufficient parameters. Three parameters are required.~%")
-          (quit))
-        (let ((file1 (probe-file (nth 1 args)))
-              (file2 (probe-file (nth 2 args)))
-              (number (parse-integer (nth 3 args) :junk-allowed t)))
-          (if (or (null file1) (null file2) (null number))
-              (progn
-                (format t "Error: Invalid parameters. First two parameters must be valid files, and the third parameter an integer number.~%")
-                (quit))
-              (progn
-                ;; Process the parameters here
-		(train-predict file1 file2 number)
-                ))))))
-
 (defun main()
   (let* ((args *posix-argv*)
 	 (arg-count (length args))
@@ -213,36 +195,40 @@
 	 (forest))
     (if (< arg-count 3)
 	(progn
-	  (format t "Error: Invalid parameters.")
+	  (format t "Error: Invalid parameters.~%")
 	  (format t "The first argument must be a valid file, and the second argument must be an integer.~%")
 	  (quit)
-	 ))
+	  ))
     (setf test-file (probe-file (nth 1 args))
 	  class-border (parse-integer (nth 2 args) :junk-allowed t)
-	  train-file (if (< arg-count 4) "model.dat" (nth 3 args)))
-
-    (if (or (not (eq (osicat:file-kind test-file) :REGULAR-FILE)) (null class-border))
+	  train-file (probe-file (if (< arg-count 4) "model.dat" (nth 3 args))))
+    (if (and test-file train-file)
 	(progn
-	  (format t "Error: Invalid parameters: check if the path is a valid file.") 
-	  (quit)
-	  );progn null parameters
-      (if (not (probe-file train-file))
-	  (progn
-	    (format t "Error: The model or train-file does not exist or is not accessible.~%")
-	    (quit)
-	    );progn no model
-	(if (< arg-count 4); no training data
+	  (if (or (not (eq (osicat:file-kind test-file) :REGULAR-FILE))
+		  (not (eq (osicat:file-kind train-file) :REGULAR-FILE)))
+	      (progn
+		(format t "Error: Invalid parameters: check if the path is a valid file.~%")
+		(quit)
+		))
+	  (if (null class-border)
+	      (progn
+		(format t "Error: Invalid parameters: check class-border parameter.~%") 
+		(quit)
+		);progn null parameters
+	    )
+	  (if (< arg-count 4); no training data
+	      (progn
+		;; Read the model file
+		(setf forest (deserialize-forest "model.dat"))
+		(predict forest test-file class-border)
+		);prong no training data
 	    (progn
-	      ;; Read the model file
-	      (setf forest (deserialize-forest "model.dat"))
-	      (predict forest test-file class-border)
-	      );prong no training data
-	  (progn
-	    ;; Call train-predict function
-	    (setf forest (train-predict train-file test-file class-border)))
-	  );if no training
-	); or training or model
-      );if
+	      ;; Call train-predict function
+	      (setf forest (train-predict train-file test-file class-border)))
+	    );if no training
+	  );progn
+      (format t "Error: Invalid files: check for valid test and model/training files.~%")
+      )
     forest
     );let
   );defun
