@@ -113,7 +113,8 @@ def main():
     if arg_count < 4:
         print("Error: Invalid parameters.")
         print("The first argument must be a test file, the second argument must be an integer, and the third the training file.")
-        print("Example: ./randomforest.py validation1.arff 94 src/myids-filter5-89-93-90-a.arff")
+        print("Example1: ./randomforest.py ../../validation1.arff 94 ../myids-filter5-89-93-90-a.arff")
+        print("Example2: ./randomforest.py ../../validation2.arff 34 ../myids-filter5-89-93-90-b.arff")
         sys.exit()
 
     test_file = args[1]

@@ -197,6 +197,8 @@
 	(progn
 	  (format t "Error: Invalid parameters.~%")
 	  (format t "The first argument must be a valid file, and the second argument must be an integer.~%")
+	  (format t "Example1: ./randomforest ../../validation1.arff 94 ../myids-filter5-89-93-90-a.arff~%")
+	  (format t "Example2: ./randomforest ../../validation2.arff 34 ~%Here, the 'model.dat' will be loaded.~%")
 	  (quit)
 	  ))
     (setf test-file (probe-file (nth 1 args))
