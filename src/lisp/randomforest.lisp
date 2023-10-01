@@ -76,7 +76,7 @@
 									(split-sequence #\, oneline)))) 
 							data_csv)
 					)
-				)
+				    )
 			(states_num (mapcar (lambda (class)  (position class classes) ) states_nom))
 			);let*
 
@@ -87,9 +87,11 @@
 			:states_num states_num
 			:classes classes))))
 
-(defun predict (forest test-file negative-limit)
+(defun predict (forest test-file negative-limit &optional classes)
   (let ( (TESTMATRIX) (ACCURACY) (CONFUSION) (FN) (FP) (SENSITIVITY)
-	 (SPECIFICITY) (TEST-DATA) (TN) (TP) (Y-PRED) )
+	 (SPECIFICITY) (TEST-DATA) (TN) (TP) (Y-PRED)
+	 (one) (two) )
+
   ;; Read the testing ARFF file
   (setf test-data (read-arff-file test-file ))
 
@@ -104,15 +106,21 @@
   (setf y-pred (loop for i from 0 to (- (length (getf test-data :states_num)) 1)
 		       collect (CL-RANDOM-FOREST::predict-forest forest testmatrix i)))
 
-  ;; Initialize the confusion matrix
-  (setf confusion (list (list 0 0) (list 0 0)))
+
+  (setf confusion (list (list 0 0) (list 0 0));; Initialize the confusion matrix
+	classes (if (null classes) (getf test-data :classes)  classes);; first NEG second POS
+	one  (first classes)	
+	two (second classes)	
+	)
+  (format t "Training classes: ~a~%"  classes)
+  (format t "Test     classes: ~a~%" (getf test-data :classes) )
   ;; Compare the predicted labels with the actual labels and increment the confusion matrix accordingly
   (loop for i below (length y-pred) do
 	(if (< i negative-limit)
-	    (if (= (nth i y-pred) (position 'NON-SECRETED (getf test-data :classes)) )
+	    (if (= (nth i y-pred) (position two classes) )
 		(incf (first (first confusion))) ; True Negative (NEGATIVE predicted correctly)
 	      (incf (second (first confusion)))) ; False Positive (POSITIVE predicted incorrectly)
-	  (if (= (nth i y-pred) (position 'SECRETED (getf test-data :classes)))
+	  (if (= (nth i y-pred) (position one classes))
 	      (incf (second (second confusion))) ; True Positive (POSITIVE predicted correctly)
 	    (incf (first (second confusion)))))) ; False Negative (NEGATIVE predicted incorrectly)
 
@@ -151,15 +159,15 @@
   (setf target (make-array (length
 				      (getf train-data :states_num))
 				     :element-type 'fixnum
-				     :initial-contents (getf train-data :states_num)))
-  (setf datamatrix (make-array (list
+				     :initial-contents (getf train-data :states_num))
+        datamatrix (make-array (list
 					  (length (getf train-data :states_num));lines
 					  (length (getf train-data :attributes));columns
 					  ) 
 					 :element-type 'single-float
-					 :initial-contents (getf train-data :data) ))
-  (setf n-class (length (getf train-data :classes)))
-  (setf forest (CL-RANDOM-FOREST::make-forest
+					 :initial-contents (getf train-data :data) )
+        n-class (length (getf train-data :classes))
+        forest (CL-RANDOM-FOREST::make-forest
 			  n-class
 			  datamatrix
 			  target
@@ -168,7 +176,7 @@
 			  :max-depth (truncate (/ (+ 1 (length (getf train-data :attributes))) 2))
 			  :min-region-samples 1
 			  :n-trial 10))
-  (predict forest test-file negative-limit)
+  (predict forest test-file negative-limit (getf train-data :classes))
   forest
   )
 )
@@ -222,11 +230,10 @@
 	      (progn
 		;; Read the model file
 		(setf forest (deserialize-forest "model.dat"))
-		(predict forest test-file class-border)
-		);prong no training data
-	    (progn
-	      ;; Call train-predict function
-	      (setf forest (train-predict train-file test-file class-border)))
+		;; Using class definitions within the arff trainig file
+		(predict forest test-file class-border (list 'SECRETED 'NON-SECRETED) )
+	      );prong no training data
+	      (setf forest (train-predict train-file test-file class-border))
 	    );if no training
 	  );progn
       (format t "Error: Invalid files: check for valid test and model/training files.~%")
