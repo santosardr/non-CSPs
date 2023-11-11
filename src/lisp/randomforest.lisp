@@ -23,17 +23,25 @@
 		(let* ((lines (loop for line = (read-line file nil)
 					while line
 					collect line))
-			(data-start-index (position "@data" lines :test #'string=))
+		       (data-start-index (position "@data" lines
+						   :test (lambda (x y) (string=
+                                                            (string-upcase x)
+                                                            (string-upcase y)))))
 			(relation_csv (subseq (first lines) 1))
 			(relation (cadr (split-sequence #\Space relation_csv)))
 			(attributes_csv (subseq lines 1 data-start-index))
 			
 			(classes_str (reduce #'append  (mapcar (lambda (attribute)
-								(let* ((start-index (position #\{ attribute))
+								 (let* ((start-index (position #\{ attribute))
 									(end-index (position #\} attribute :from-end t))
 									(values (subseq attribute (1+ start-index) end-index)))
-								(split-sequence #\, values)))
-								(last attributes_csv))))
+								   (split-sequence #\, values)))
+							       ;;locate the class line                       
+							       (remove-if-not
+								(lambda (item)
+								  (search "CLASS" (string-upcase item)))
+								attributes_csv)
+							       )))
 			(classes (mapcar (lambda (class) (read-from-string class)) classes_str))
 			
 			(attributes (remove-if #'null (mapcar (lambda (att)
