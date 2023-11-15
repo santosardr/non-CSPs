@@ -1,7 +1,13 @@
 ;; Load necessary libraries
 (require :cl-random-forest)
 (require :cl-store)
-(require :osicat)
+
+(defun file-or-directory (pathname)
+  (if (uiop:directory-exists-p pathname)
+      :directory
+      (if (uiop:file-exists-p pathname)
+          :regular-file
+          nil)))
 
 (defun string-empty-p (string)
   (zerop (length string)))
@@ -222,8 +228,8 @@
 	  train-file (probe-file (if (< arg-count 4) "model.dat" (nth 3 args))))
     (if (and test-file train-file)
 	(progn
-	  (if (or (not (eq (osicat:file-kind test-file) :REGULAR-FILE))
-		  (not (eq (osicat:file-kind train-file) :REGULAR-FILE)))
+	  (if (or (not (eq (file-or-directory test-file) :REGULAR-FILE))
+		  (not (eq (file-or-directory train-file) :REGULAR-FILE)))
 	      (progn
 		(format t "Error: Invalid parameters: check if the path is a valid file.~%")
 		(quit)
