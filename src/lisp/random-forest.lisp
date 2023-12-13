@@ -1,6 +1,21 @@
-;; Load necessary libraries
-(require :cl-random-forest)
-(require :cl-store)
+(defpackage :random-forest
+  (:use :cl)
+  (:export :file-or-directory
+           :string-empty-p
+           :split-sequence
+           :read-arff-file
+           :predict
+           :train-predict
+           :serialize-forest
+           :deserialize-forest))
+
+(in-package :random-forest)
+
+(unless (find-package :cl-random-forest)
+  (require :cl-random-forest))
+
+(unless (find-package :cl-store)
+  (require :cl-store ))
 
 (defun file-or-directory (pathname)
   (if (uiop:directory-exists-p pathname)
@@ -208,6 +223,8 @@
   :element-type '(unsigned-byte 8))
   (cl-store:restore stream)))	
 
+(in-package :cl-user)
+
 (defun main()
   (let* ((args *posix-argv*)
 	 (arg-count (length args))
@@ -219,8 +236,8 @@
 	(progn
 	  (format t "The first argument must be a valid test file, and the second an integer.~%")
 	  (format t "The integer means a position threshold separating the negatives (head) from the positives (tail) in the test file.~%")
-	  (format t "Example1:~C./randomforest ../../validation1.arff 92 ../myids-filter5-89-93-90-a.arff~%" #\tab )
-	  (format t "Example2:~C./randomforest ../../validation2.arff 34 ~%~CHere, the 'model.dat' will be loaded.~%" #\tab #\tab )
+	  (format t "Example1:~C./random-forest ../../validation1.arff 92 ../myids-filter5-89-93-90-a.arff~%" #\tab )
+	  (format t "Example2:~C./random-forest ../../validation2.arff 34 ~%~CHere, the 'model.dat' will be loaded.~%" #\tab #\tab )
 	  (quit)
 	  ))
     (setf test-file (probe-file (nth 1 args))
@@ -228,8 +245,8 @@
 	  train-file (probe-file (if (< arg-count 4) "model.dat" (nth 3 args))))
     (if (and test-file train-file)
 	(progn
-	  (if (or (not (eq (file-or-directory test-file) :REGULAR-FILE))
-		  (not (eq (file-or-directory train-file) :REGULAR-FILE)))
+	  (if (or (not (eq (random-forest:file-or-directory test-file) :REGULAR-FILE))
+		  (not (eq (random-forest:file-or-directory train-file) :REGULAR-FILE)))
 	      (progn
 		(format t "Error: Invalid parameters: check if the path is a valid file.~%")
 		(quit)
@@ -243,11 +260,11 @@
 	  (if (< arg-count 4); no training data
 	      (progn
 		;; Read the model file
-		(setf forest (deserialize-forest "model.dat"))
+		(setf forest (random-forest:deserialize-forest "model.dat"))
 		;; Using class definitions within the arff trainig file
-		(predict forest test-file class-border (list 'SECRETED 'NON-SECRETED) )
+		(random-forest:predict forest test-file class-border (list 'SECRETED 'NON-SECRETED) )
 	      );prong no training data
-	      (setf forest (train-predict train-file test-file class-border))
+	      (setf forest (random-forest:train-predict train-file test-file class-border))
 	    );if no training
 	  );progn
       (format t "Error: Invalid files: check for valid test and model/training files.~%")
