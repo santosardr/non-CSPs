@@ -1,12 +1,19 @@
-					;rlwrap sbcl --dynamic-space-size 1024 --load pattern.lisp
-					;(save-lisp-and-die "features" :executable t :save-runtime-options t :compression 9 :toplevel 'main)
-					;(save-lisp-and-die "features" :executable t :save-runtime-options t :toplevel 'main)
+(defpackage :features
+  (:use :cl)
+  (:export
+   :nth-string
+   :parse-float
+   :read-fasta
+   :read-propensity
+   :all-positions
+   :statistics
+   :convert-to-key
+   :dohistogram
+   :dohistogramini
+   :dohistogramend
+   :dohistogrammid))
 
-					;The global set of the random state does not work for the executable version of the program.
-					;I will keep it here but changed all random calls to force the state update.
-					;(setq *random-state* (make-random-state t))
-
-(defvar *printlist* nil "Vector to store the final result of the program forcluster in a format to produce the final output of the program")
+(in-package :features)
 
 					;Given a text string, a field delimiter and a position this function returns the text at the specific location.
 (defun nth-string (pos tabular delim)
@@ -137,7 +144,7 @@
 
 
 (defun histo-fasta( filename )
-  (let  ( (multifastalist (read-fasta filename ))
+  (let  ( (multifastalist (features:read-fasta filename ))
 	 (aatargets (list  'A 'R 'N 'D 'C 'Q 'E 'G 'H 'I 'L 'K 'M 'F 'P 'S 'T 'W 'Y 'V))
 	  (histolist nil)
 	  (fastaname)
@@ -156,21 +163,17 @@
   );let
   )
 
-(defun dohistogram( fastalist )
-  (let  ( (aatargets (list  'A 'R 'N 'D 'C 'Q 'E 'G 'H 'I 'L 'K 'M 'F 'P 'S 'T 'W 'Y 'V))
-	  (histolist nil)
-	) 
-      (setq  histolist nil);setq
-      (dolist (aa aatargets histolist) 
+(defun dohistogram( fastalist aatargets)
+  (let  ( (histolist nil))
+      (dolist (aa aatargets histolist)
 	(setq histolist (append histolist (list (count aa  fastalist)))) 
       );do 
     histolist
   );let
   )
 
-(defun dohistogramini( fastalist )
-  (let  ( (aatargets (list  'A 'R 'N 'D 'C 'Q 'E 'G 'H 'I 'L 'K 'M 'F 'P 'S 'T 'W 'Y 'V))
-	 (histolist nil)
+(defun dohistogramini( fastalist aatargets)
+  (let  ( (histolist nil)
 	  (size (length fastalist))
 	  (limit 40)
 	) 
@@ -181,9 +184,8 @@
   );let
   )
 
-(defun dohistogramend( fastalist )
-  (let  ( (aatargets (list  'A 'R 'N 'D 'C 'Q 'E 'G 'H 'I 'L 'K 'M 'F 'P 'S 'T 'W 'Y 'V))
-	 (histolist nil)
+(defun dohistogramend( fastalist aatargets)
+  (let  ( (histolist nil)
 	  (size (- (length fastalist) 60))
 	) 
       (dolist (aa aatargets histolist) 
@@ -193,9 +195,8 @@
   );let
   )
 
-(defun dohistogrammid( fastalist )
-  (let  ( (aatargets (list  'A 'R 'N 'D 'C 'Q 'E 'G 'H 'I 'L 'K 'M 'F 'P 'S 'T 'W 'Y 'V))
-	  (histolist nil)
+(defun dohistogrammid( fastalist aatargets)
+  (let  ( (histolist nil)
 	  (size (length fastalist) )
 	  (ratio)
 	  (start)
@@ -214,21 +215,26 @@
 
 					;The main function settles everything for the execution of the program.
 					;This function also is the entry point for the executable created from this lisp code.
+
+(in-package :cl-user)
+
+(defvar *printlist* nil "Vector to store the final result of the program forcluster in a format to produce the final output of the program")
+
 (defun main ()
   (if (> (length sb-ext:*posix-argv*) 1)
       (let (
 					;primeiro parâmetro é o nome do arquivo
 	    (fastafile nil)
 	    (propensityfile nil)
-	    (searchspace)
-	    (milestone)
-	    (checkmilestone)
+	    ;(searchspace)
+	    ;(milestone)
+	    ;(checkmilestone)
 	    (multifasta)
 	    (multifasta-size)
 	    (listof-sequence-names)
 	    (sequence)
 	    (sequence-name)
-	    (sequence-size)
+	    ;(sequence-size)
 	    (sequence-number 0)
 	    (sequence-histogram)
 	    (pos)
@@ -255,7 +261,7 @@
 	      )
 	    );if
 	
-	(multiple-value-bind ( labels props) (read-propensity propensityfile)
+	(multiple-value-bind ( labels props) (features:read-propensity propensityfile)
 	  (setf
 	   labels (append labels
 			  (loop for place in (list "INI" "END" "MID") append
@@ -264,7 +270,7 @@
 			  )
 	   alphabet (append histoalphabet  labels)
 	   physicochemicals props
-	   multifasta (read-fasta fastafile)
+	   multifasta (features:read-fasta fastafile)
 	   multifasta-size (length multifasta)
 	   *printlist* (make-array (list  (+ multifasta-size 1)  (+ (length alphabet) 1) ) :initial-element nil)
 	   );setf
@@ -276,12 +282,12 @@
 	     (setf sequence (cadr fasta)
 		   sequence-name (car fasta)
 		   listof-sequence-names (append listof-sequence-names (list sequence-name))
-		   sequence-size (length sequence)
-		   sequence-histogram (dohistogram sequence)
-		   searchspace sequence-size
-		   milestone (round (*  sequence-size 0.01))
-		   milestone (if (zerop milestone) 1 milestone)
-		   checkmilestone milestone
+		   ;sequence-size (length sequence)
+		   sequence-histogram (features:dohistogram sequence histoalphabet)
+		   ;searchspace sequence-size
+		   ;milestone (round (*  sequence-size 0.01))
+		   ;milestone (if (zerop milestone) 1 milestone)
+		   ;checkmilestone milestone
 		   );setf
 	     
 					;começa o processamento para uma sequencia
@@ -306,7 +312,7 @@
 		  )
 	     
 					;Giving a try: lets compute the number of aminoacids just at the region known to host the signal peptide
-	     (setf sequence-histogram (dohistogramini sequence))
+	     (setf sequence-histogram (features:dohistogramini sequence histoalphabet))
 	     (loop for physico in physicochemicals do
 		  (setf (aref *printlist* (+ sequence-number 1) (+ pos 1))
 		    (loop for  weigth-list in (list physico) sum
@@ -317,7 +323,7 @@
 		  )
 	     
 					;Giving another  try: lets compute the number of aminoacids just at the end of the protein
-	     (setf sequence-histogram (dohistogramend sequence))
+	     (setf sequence-histogram (features:dohistogramend sequence histoalphabet))
 	     (loop for physico in physicochemicals do
 		  (setf (aref *printlist* (+ sequence-number 1) (+ pos 1))
 		    (loop for  weigth-list in (list physico) sum
@@ -328,7 +334,7 @@
 		  )
 	     
 					;Giving another  try: lets compute the number of aminoacids just at the middle
-	     (setf sequence-histogram (dohistogrammid sequence))
+	     (setf sequence-histogram (features:dohistogrammid sequence histoalphabet))
 	     (loop for physico in physicochemicals do
 		  (setf (aref *printlist* (+ sequence-number 1) (+ pos 1))
 		    (loop for  weigth-list in (list physico) sum
@@ -343,7 +349,7 @@
 	
 					;final pretty print
 					;write the name of the sequences in the first line of the *printlist*
-					;In the first line, the first column of *printlist* must be an empty string. Starting the names from the second column or x=1
+					;In the first line, the first column of features:*printlist* must be an empty string. Starting the names from the second column or x=1
 	(setf (aref *printlist* 0 0 ) "");empty string
 					;Inserting the attribute names in first line
 	(loop for y from 1 to (length histoalphabet) do
