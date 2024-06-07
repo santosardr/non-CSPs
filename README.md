@@ -21,9 +21,7 @@ I apologize for any confusion this may have caused. I appreciate your understand
 This repository contains mainly data and software to facilitate the creation of ARFF files for WEKA. Once your data is formatted to an ARFF, you can execute all software within the WEKA software. Read the methods in my article to learn how to proceed.
 
 
-Besides the software to format data for WEKA, I added the pipeline SurfG+, which allows me to\
-
- create a large data set (1050) negative for non-classical secreted proteins. SurfG+ is very helpful in classifying bacterial proteins according to localizations membrane (integral and partial), cytoplasm, and secreted.
+Besides the software to format data for WEKA, I added the pipeline SurfG+, which allows me to create a large data set (1050) negative for non-classical secreted proteins. SurfG+ is very helpful in classifying bacterial proteins according to localizations membrane (integral and partial), cytoplasm, and secreted.
 
 
 ## Fast-track
@@ -45,6 +43,9 @@ chmod 755 run.validation*
 
 - call the run.validation1 or run.validation2
 
+```bash
+./run.validation1
+```
 
 These validation scripts use the two test datasets described in the article.
 
