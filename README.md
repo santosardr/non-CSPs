@@ -1,4 +1,4 @@
-# Enhancing omics analyses of bacterial protein secretion via non-classical pathways
+# The fastest-ever omics analyses of bacterial protein secretion via non-classical pathways without deep learning and as accurate as those
 
 
 ## Erratum
