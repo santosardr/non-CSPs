@@ -55,7 +55,7 @@ These validation scripts use the two test datasets described in the article.
 You will need a set of proteins in fasta format. Keep protein names as simple as possible to avoid processing errors across several scripts. In case of difficulties editing the protein names manually, I suggest using my program src/valifasta like this:
 
 ```bash
-valifasta -i test.fasta -o test.fasta
+../bin/valifasta -i test.fasta -o test.fasta
 ```
 
 After that, consider using my script 'src/createARFFtotest.bash'. This script expects to find the file 'test.faa' in the same directory within the script. Just run the script to create a file called 'localsubcellular.arff'.
