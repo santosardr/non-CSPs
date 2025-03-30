@@ -159,8 +159,8 @@
         tn (first (first confusion))
         fp (first (second confusion))
 	;; Calculate the sensitivity and specificity
-	sensitivity (if (= (+ tp fn) 0) 0 (/ tp (+ tp fp)))
-	specificity (/ tn (+ tn fn))
+	sensitivity (if (= (+ tp fn) 0) 0 (/ tp (+ tp fn)))
+	specificity (if (= (+ tn fp) 0) 0 (/ tn (+ tn fp)))
 	;; Calculate the accuracy
 	accuracy (/ (+ tp tn) (+ tp tn fp fn)))
   ;; Print the confusion matrix

@@ -56,7 +56,10 @@ def train_predict(train_file, test_file, class_border):
     else:
         sensitivity = tp / (tp + fn)
 
-    specificity = tn / (tn + fp)
+    if tn + fp == 0:
+        specificiy = 0
+    else:
+        specificity = tn / (tn + fp)
 
     # Calculate the accuracy
     accuracy = (tp + tn) / (tp + tn + fp + fn)
