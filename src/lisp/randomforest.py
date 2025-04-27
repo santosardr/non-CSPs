@@ -3,8 +3,9 @@ import os
 import sys
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import confusion_matrix, roc_curve, auc
+from sklearn.metrics import confusion_matrix, roc_curve, auc, f1_score
 import matplotlib.pyplot as plt
+import numpy as np  # Import numpy
 
 def train_predict(train_file, test_file, class_border):
 
@@ -82,7 +83,10 @@ def train_predict(train_file, test_file, class_border):
     print(f"Accuracy: {accuracy}\n")
 
     # Set the true labels for the testing data based on the limits
-    y_test = [0] * class_border + [1] * (len(X_test) - class_border)
+    y_test = np.array([0] * class_border + [1] * (len(X_test) - class_border))  # Convert to numpy array
+
+    # Convert predicted labels to numerical values
+    y_pred_numeric = np.where(y_pred == 'NON-SECRETED', 0, 1)
 
     # Predict the probability of the positive class for the testing data
     y_pred_prob = model.predict_proba(X_test)[:, 1]
@@ -92,6 +96,13 @@ def train_predict(train_file, test_file, class_border):
 
     # Calculate the area under the ROC curve (AUC)
     roc_auc = auc(fpr, tpr)
+
+    # Calculate F1-score
+    f1 = f1_score(y_test, y_pred_numeric)
+
+    # Print F1-score and AUC
+    print(f"F1-Score: {f1}")
+    print(f"AUC: {roc_auc}")
 
     # Plot the ROC curve
     plt.figure()
